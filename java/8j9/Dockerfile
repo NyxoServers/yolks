@@ -28,7 +28,7 @@ LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolk
 LABEL       org.opencontainers.image.licenses=MIT
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PS1="container@coldhost.eu~ "
+ENV PS1="container@nyxoservers.eu~ "
 
 RUN apt-get update \
 	&& apt-get install -y lsof curl libcap2-bin ca-certificates \
