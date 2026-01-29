@@ -24,7 +24,7 @@ FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:23-jdk
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
-LABEL       org.opencontainers.image.source="https://github.com/Coldhost/yolks"
+LABEL       org.opencontainers.image.source="https://github.com/NyxoServers/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
 ENV DEBIAN_FRONTEND=noninteractive
