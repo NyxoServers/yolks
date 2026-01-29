@@ -13,7 +13,6 @@ SERVER_URLS = {
     "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/{version}/forge-{version}-installer.jar",
     "velocity":"placeholder",
     "spigot":"placeholder",
-    "mohist":"placeholder"
 }
 
 def download_file(url, output_path):
