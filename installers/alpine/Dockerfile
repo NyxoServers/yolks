@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-FROM		ghcr.io/coldhost/tools-cli:latest-full-release as tools
+FROM		ghcr.io/nyxoservers/tools-cli:latest-full-release as tools
 
 RUN tar -xzf ghcr_tools.tar.gz
 
@@ -27,10 +27,10 @@ FROM        --platform=$TARGETOS/$TARGETARCH alpine:latest
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
-LABEL       org.opencontainers.image.source="https://github.com/Coldhost/yolks"
+LABEL       org.opencontainers.image.source="https://github.com/NyxoServers/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apk add --update --no-cache ca-certificates curl git jq wget
-RUN         curl -o /usr/local/bin/downloader https://raw.githubusercontent.com/Coldhost/eggs/refs/heads/master/scripts/downloader.sh \
+RUN         curl -o /usr/local/bin/downloader https://raw.githubusercontent.com/NyxoServers/eggs/refs/heads/master/scripts/downloader.sh \
 				&& chmod +x /usr/local/bin/downloader
 COPY        --from=tools /tools /bin/tools

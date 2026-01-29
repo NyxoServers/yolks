@@ -43,7 +43,7 @@ jobs:
             --build-arg RUN_NUMBER=${{ github.run_number }} \
             --build-arg MATRIX_VERSION=${{ matrix.version }} \
             --build-arg MATRIX_TYPE=${{ matrix.type }} \
-            --tag ghcr.io/coldhost/tools-cli:v${{ github.run_number }}-${{ matrix.version }}-${{ matrix.type }} \
-            --tag ghcr.io/coldhost/tools-cli:latest-${{ matrix.version }}-${{ matrix.type }} \
-            --tag ghcr.io/coldhost/tools-cli:${{ github.run_number }}-${{ matrix.version }}-${{ matrix.type }} \
+            --tag ghcr.io/nyxoservers/tools-cli:v${{ github.run_number }}-${{ matrix.version }}-${{ matrix.type }} \
+            --tag ghcr.io/nyxoservers/tools-cli:latest-${{ matrix.version }}-${{ matrix.type }} \
+            --tag ghcr.io/nyxoservers/tools-cli:${{ github.run_number }}-${{ matrix.version }}-${{ matrix.type }} \
             --push .
