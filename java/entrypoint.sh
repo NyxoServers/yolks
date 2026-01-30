@@ -52,6 +52,7 @@ cd /home/container || exit 1
 
 # Update ClamAV definitions (optional but recommended at runtime)
 if [ "$ENABLE_AV" = 1 ]; then
+	printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mAntivirus scanning is enabled. If youre restarting the server often, you can disable the antivirus for a while at Startup page\033[0m\n"
 	mkdir -p /home/container/clamav/logs /home/container/clamav/quarantine
 	if find /home/container/clamav/quarantine -type f | grep -q .; then
 		if [ "$AUTOREMOVE" = 1 ]; then
