@@ -24,6 +24,7 @@ jobs:
           - 3.11
           - 3.12
           - 3.13
+          - 3.14
           - discord.py-2.7
           - discord.py-3.7
           - discord.py-3.8
@@ -32,6 +33,7 @@ jobs:
           - discord.py-3.11
           - discord.py-3.12
           - discord.py-3.13
+          - discord.py-3.14
     steps:
       - uses: actions/checkout@v3
       # Setup QEMU for ARM64 Build
@@ -44,6 +46,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Get Commit info
+        run: |
+          COMMIT_COUNT=${{ github.run_number }} && echo "$COMMIT_COUNT" > python/commit_count.txt
+          COMMIT_MESSAGE="${{ github.event.head_commit.message || 'No commit message available' }}" && echo "$COMMIT_MESSAGE" > python/commit_message.txt
       - uses: docker/build-push-action@v4
         with:
           context: ./python

@@ -24,15 +24,22 @@ FROM        --platform=$TARGETOS/$TARGETARCH python:3.7-alpine
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
-LABEL       org.opencontainers.image.source="https://github.com/Coldhost/yolks"
+LABEL       org.opencontainers.image.source="https://github.com/NyxoServers/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apk add --update --no-cache cmake make ca-certificates curl ffmpeg g++ gcc git openssl sqlite tar tzdata \
-				&& adduser -D -h /home/container container
+			&& apk add --update --no-cache clamav clamav-daemon clamav-libunrar \
+			&& adduser -D -h /home/container container
+
+RUN chown -R container:container /usr/bin/freshclam /var/lib/clamav
 
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
 
+COPY        ./../commit_count.txt /commit_count.txt
+COPY        ./../commit_message.txt /commit_message.txt
+COPY        ./../freshclam.conf /freshclam.conf
 COPY        ./../entrypoint.discord.sh /entrypoint.sh
+
 CMD         [ "/bin/ash", "/entrypoint.sh" ]

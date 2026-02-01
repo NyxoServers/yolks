@@ -33,6 +33,46 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+# Update ClamAV definitions (optional but recommended at runtime)
+if [ "$ENABLE_AV" = 1 ]; then
+	printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mAntivirus scanning is enabled. If youre restarting the server often, you can disable the antivirus for a while at Startup page\033[0m\n"
+	mkdir -p /home/container/clamav/logs /home/container/clamav/quarantine
+	if find /home/container/clamav/quarantine -type f | grep -q .; then
+		if [ "$AUTOREMOVE" = 1 ]; then
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
+			rm -rf /home/container/clamav/quarantine/*
+		else
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
+			exit
+		fi
+	fi
+	echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mUpdating Virus Databases...\033[0m"
+	cp /freshclam.conf /home/container/clamav
+	freshclam --config-file=/home/container/clamav/freshclam.conf
+	if [ "$ONLY_PLUGINS" = 1 ]; then
+		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning plugins with ClamAV AntiVirus...\033[0m"
+		echo -e "THIS MAY TAKE AROUND 2 MINUTES"
+		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container/plugins
+	else
+		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning the home directory with ClamAV AntiVirus...\033[0m"
+		echo -e "THIS MAY TAKE UNDER 10 MINUTES"
+		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container
+	fi
+	if find /home/container/clamav/quarantine -type f | grep -q .; then
+		if [ "$AUTOREMOVE" = 1 ]; then
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
+			rm -rf /home/container/clamav/quarantine/*
+		else
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
+			exit
+		fi
+	fi
+else
+	rm -rf /home/container/clamav
+    printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mWARNING: Antivirus scanning is disabled.\n"
+fi
+
+
 # Print Python version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mpython --version\n"
 python --version
