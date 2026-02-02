@@ -29,6 +29,15 @@ LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apk add --update --no-cache cmake make ca-certificates curl ffmpeg g++ gcc git openssl sqlite tar tzdata \
 			&& apk add --update --no-cache clamav clamav-daemon clamav-libunrar \
+			&& apk add --update --no-cache skopeo umoci \
+			&& mkdir -p /mnt/unpacked_tools \
+			&& skopeo copy docker://ghcr.io/coldhost/tools-cli:latest-full-release oci:/mnt/extracted:latest-full-release \
+			&& umoci unpack --rootless --image /mnt/extracted:latest-full-release /mnt/unpacked \
+			&& tar -xvf /mnt/unpacked/rootfs/ghcr_tools.tar.gz -C /mnt/unpacked_tools \
+			&& chmod +x /mnt/unpacked_tools/tools \
+			&& /mnt/unpacked_tools/tools version \
+			&& mv /mnt/unpacked_tools/tools /bin/tools \
+			&& rm -rf /mnt \
 			&& adduser -D -h /home/container container
 
 RUN chown -R container:container /usr/bin/freshclam /var/lib/clamav
