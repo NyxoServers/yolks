@@ -36,18 +36,13 @@
 # Clear so it shows nicer
 clear
 
-#echo -e "\033[1;39;44m __    .  ..  .       , "
-#echo -e '\033[1;39;44m/  ` _ | _||__| _  __-+-'
-#echo -e "\033[1;39;44m\__.(_)|(_]|  |(_)_)  | "
-#echo -e "\033[1;39;44m                        "
-echo -e               "########################################################"
-echo -e "#\033[1;39;44m    ___      _     _                 _                \033[0m#"
-echo -e "#\033[1;39;44m   / __\___ | | __| | /\  /\___  ___| |_   ___ _   _  \033[0m#"
-echo -e '#\033[1;39;44m  / /  / _ \| |/ _` |/ /_/ / _ \/ __| __| / _ \ | | | \033[0m#'
-echo -e '#\033[1;39;44m / /__| (_) | | (_| / __  / (_) \__ \ |_ |  __/ |_| | \033[0m#'
-echo -e '#\033[1;39;44m \____/\___/|_|\__,_\/ /_/ \___/|___/\__(_)___|\__,_| \033[0m#'
-echo -e "#\033[1;39;44m                                                      \033[0m#"
-echo -e               "########################################################"
+echo -e               "####################################################################"
+echo -e "#\033[1;39;44m     _  __               ____                                     \033[0m#"
+echo -e "#\033[1;39;44m    / |/ /_ ____ _____  / __/__ _____  _____ _______  ___ __ __   \033[0m#"
+echo -e "#\033[1;39;44m   /    / // /\ \ / _ \_\ \/ -_) __/ |/ / -_) __(_-<_/ -_) // /   \033[0m#"
+echo -e "#\033[1;39;44m  /_/|_/\_, //_\_\​\___/___/\__/_/  |___/\__/_/ /___(_)__/\_,_/    \033[0m#"
+echo -e "#\033[1;39;44m       /___/                                                      \033[0m#"
+echo -e               "####################################################################"
 COMMIT_NUMBER=$(cat /commit_count.txt)
 COMMIT_MESSAGE=$(cat /commit_message.txt)
 echo -e " "
@@ -89,51 +84,51 @@ if [ "$ENABLE_AV" = 1 ]; then
 	mkdir -p /home/container/clamav/logs /home/container/clamav/quarantine
 	if find /home/container/clamav/quarantine -type f | grep -q .; then
 		if [ "$AUTOREMOVE" = 1 ]; then
-			printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
 			rm -rf /home/container/clamav/quarantine/*
 		else
-			printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
 			exit
 		fi
 	fi
-	echo -e "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mUpdating Virus Databases...\033[0m"
+	echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mUpdating Virus Databases...\033[0m"
 	cp /freshclam.conf /home/container/clamav
 	freshclam --config-file=/home/container/clamav/freshclam.conf
 	if [ "$ONLY_MODULES" = 1 ]; then
-		echo -e "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mScanning node_modules with ClamAV AntiVirus...\033[0m"
+		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning node_modules with ClamAV AntiVirus...\033[0m"
 		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.js$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container/node_modules
 	else
-		echo -e "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mScanning the home directory with ClamAV AntiVirus...\033[0m"
+		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning the home directory with ClamAV AntiVirus...\033[0m"
 		echo -e "THIS MAY TAKE FEW MINUTES BASED ON USED SIZE"
 		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.js$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container
 	fi
 	if find /home/container/clamav/quarantine -type f | grep -q .; then
 		if [ "$AUTOREMOVE" = 1 ]; then
-			printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Deleting...\033[0m\n"
 			rm -rf /home/container/clamav/quarantine/*
 		else
-			printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
+			printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;41mQuarantined files are in /clamav/quarantine, Please delete them to remove this error\033[0m\n"
 			exit
 		fi
 	fi
 else
 	rm -rf /home/container/clamav
-    printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mWARNING: Antivirus scanning is disabled.\n"
+    printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mWARNING: Antivirus scanning is disabled.\n"
 fi
 
 if [ "$GIT_DOWNLOAD" = 1 ]; then
 	if git -C /home/container rev-parse --is-inside-work-tree &>/dev/null; then
-		printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mTrying to pull changes\033[0m\n"
+		printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mTrying to pull changes\033[0m\n"
 		git stash -- package.json
 		git pull
 		git pop
 	else
-		printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[1;39;44mPlease reinstall the server first (not a git repository)\033[0m\n"
+		printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mPlease reinstall the server first (not a git repository)\033[0m\n"
 	fi
 fi
 
 if [ "$INSTALL_PKGS" = 1 ]; then
-    printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[0mInstalling Dependencies...\n"
+    printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[0mInstalling Dependencies...\n"
 	package_manager_install
 fi
 
@@ -153,9 +148,9 @@ fi
 tools nodejs check-npm-startup package.json
 
 # Print Node.js version
-printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[0mnode -v\n"
+printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[0mnode -v\n"
 node -v
-printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[0mnpm -v\n"
+printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[0mnpm -v\n"
 npm -v
 
 cd /home/container
@@ -166,6 +161,6 @@ PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat
 
 # Display the command we're running in the output, and then execute it with the env
 # from the container itself.
-printf "\033[1m\033[33mcontainer@coldhost.eu~ \033[0m%s\n" "$PARSED"
+printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[0m%s\n" "$PARSED"
 # shellcheck disable=SC2086
 exec env ${PARSED}
