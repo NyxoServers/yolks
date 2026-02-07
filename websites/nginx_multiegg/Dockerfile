@@ -21,8 +21,8 @@ ENV HOME /home/container
 
 WORKDIR /home/container
 
-COPY        ./../commit_count.txt /commit_count.txt
-COPY        ./../commit_message.txt /commit_message.txt
+COPY        ./commit_count.txt /commit_count.txt
+COPY        ./commit_message.txt /commit_message.txt
 COPY        ./freshclam.conf /freshclam.conf
 COPY        ./entrypoint.sh /entrypoint.sh
 
