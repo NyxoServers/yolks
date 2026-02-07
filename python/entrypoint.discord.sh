@@ -99,6 +99,7 @@ fi
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mpython --version\n"
 
 python --version
+printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mpip --version\n"
 pip --version
 # Convert all of the "{{VARIABLE}}" parts of the command into the expected shell
 # variable format of "${VARIABLE}" before evaluating the string and automatically
