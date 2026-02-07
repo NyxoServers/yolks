@@ -93,6 +93,7 @@ fi
 
 if [ -z "$main" ] || [ "$main" == "" ]; then
 	${main}="bot.py"
+fi
 
 # Print Python version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mpython --version\n"
