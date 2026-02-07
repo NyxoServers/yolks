@@ -86,6 +86,11 @@ else
     printf "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mWARNING: Antivirus scanning is disabled.\n"
 fi
 
+if [ -f "requirements.txt" ]; then
+	echo -e "\033[1m\033[ Installing dependencies with pip...\033[0m\n"
+	pip install --no-cache-dir -r requirements.txt
+fi
+
 
 # Print Python version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mpython --version\n"
