@@ -31,7 +31,7 @@ RUN         apk add --update --no-cache cmake make ca-certificates curl ffmpeg g
 			&& apk add --update --no-cache clamav clamav-daemon clamav-libunrar \
 			&& apk add --update --no-cache skopeo umoci \
 			&& mkdir -p /mnt/unpacked_tools \
-			&& skopeo copy docker://ghcr.io/coldhost/tools-cli:latest-full-release oci:/mnt/extracted:latest-full-release \
+			&& skopeo copy docker://ghcr.io/nyxoservers/tools-cli:latest-full-release oci:/mnt/extracted:latest-full-release \
 			&& umoci unpack --rootless --image /mnt/extracted:latest-full-release /mnt/unpacked \
 			&& tar -xvf /mnt/unpacked/rootfs/ghcr_tools.tar.gz -C /mnt/unpacked_tools \
 			&& chmod +x /mnt/unpacked_tools/tools \
