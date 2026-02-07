@@ -92,7 +92,7 @@ if [ -f "requirements.txt" ]; then
 fi
 
 if [ -z "$main" ] || [ "$main" == "" ]; then
-	${main}="bot.py"
+	main ="bot.py"
 fi
 
 # Print Python version
