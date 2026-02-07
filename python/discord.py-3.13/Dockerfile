@@ -38,7 +38,9 @@ RUN         apk add --update --no-cache cmake make ca-certificates curl ffmpeg g
 			&& /mnt/unpacked_tools/tools version \
 			&& mv /mnt/unpacked_tools/tools /bin/tools \
 			&& rm -rf /mnt \
-			&& adduser -D -h /home/container container
+			&& adduser -D -h /home/container container \
+			&& python -m pip install --upgrade pip
+
 
 RUN chown -R container:container /usr/bin/freshclam /var/lib/clamav
 
