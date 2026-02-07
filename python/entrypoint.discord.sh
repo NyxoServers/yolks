@@ -91,8 +91,8 @@ if [ -f "requirements.txt" ]; then
 	pip install --no-cache-dir -r requirements.txt
 fi
 
-if [ -z "$main" ] || [ "$main" == "" ]; then
-	main ="bot.py"
+if [ -z "$MAIN" ] || [ "$MAIN" == "" ]; then
+	MAIN="bot.py"
 fi
 
 # Print Python version
