@@ -64,13 +64,13 @@ if [ "$ENABLE_AV" = 1 ]; then
 	cp /freshclam.conf /home/container/clamav
 	freshclam --config-file=/home/container/clamav/freshclam.conf
 	if [ "$ONLY_PLUGINS" = 1 ]; then
-		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning plugins with ClamAV AntiVirus...\033[0m"
+		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning modules with ClamAV AntiVirus...\033[0m"
 		echo -e "THIS MAY TAKE AROUND 2 MINUTES"
-		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container/plugins
+		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.py$" --include="\.pyx$" --exclude-dir="\.cache"  /home/container/.local
 	else
 		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning the home directory with ClamAV AntiVirus...\033[0m"
 		echo -e "THIS MAY TAKE UNDER 10 MINUTES"
-		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container
+		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.py$" --include="\.pyx$" --exclude-dir="\.cache" /home/container
 	fi
 	if find /home/container/clamav/quarantine -type f | grep -q .; then
 		if [ "$AUTOREMOVE" = 1 ]; then
