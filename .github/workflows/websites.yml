@@ -1,5 +1,4 @@
 name: build websites
-
 on:
   workflow_dispatch:
   schedule:
@@ -17,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         websites:
-            - nginx_multiegg
+            - none
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-qemu-action@v2
@@ -29,10 +28,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - name: Get Commit info
-        run: |
-          COMMIT_COUNT=${{ github.run_number }} && echo "$COMMIT_COUNT" > websites/${{ matrix.websites }}/commit_count.txt
-          COMMIT_MESSAGE="${{ github.event.head_commit.message || 'No commit message available' }}" && echo "$COMMIT_MESSAGE" > websites/${{ matrix.websites }}/commit_message.txt
       - uses: docker/build-push-action@v4
         with:
           context: ./websites/${{ matrix.websites }}
@@ -40,4 +35,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/nyxoservers/yolks:${{ matrix.websites }}
+            ghcr.io/pterodactyl/yolks:${{ matrix.websites }}

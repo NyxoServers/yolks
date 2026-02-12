@@ -47,6 +47,8 @@ export TZ
 INTERNAL_IP=$(ip route get 1 | awk '{print $(NF-2);exit}')
 export INTERNAL_IP
 
+clamav_flags='-r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$"'
+
 # Switch to the container's working directory
 cd /home/container || exit 1
 
@@ -69,7 +71,11 @@ if [ "$ENABLE_AV" = 1 ]; then
 	if [ "$ONLY_PLUGINS" = 1 ]; then
 		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning plugins with ClamAV AntiVirus...\033[0m"
 		echo -e "THIS MAY TAKE AROUND 2 MINUTES"
-		clamscan -r --move=/home/container/clamav/quarantine --log=/home/container/clamav/logs/clamscan.txt --database=/home/container/clamav/ --infected --include="^[^\.]+$" --include="\.jar$" --exclude-dir="\.cache" --exclude="\.paper-remapped$" /home/container/plugins
+		if [ -d "/home/container/plugins" ]; then
+			clamscan $clamav_flags /home/container/plugins
+		else
+			clamscan $clamav_flags /home/container/mods
+		fi
 	else
 		echo -e "\033[1m\033[33mcontainer@nyxoservers.eu~ \033[1;39;44mScanning the home directory with ClamAV AntiVirus...\033[0m"
 		echo -e "THIS MAY TAKE UNDER 10 MINUTES"
