@@ -35,6 +35,7 @@ jobs:
           - 19j9
           - 21
           - 23
+          - 25
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-qemu-action@v3
