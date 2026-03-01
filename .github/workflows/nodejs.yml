@@ -62,4 +62,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/coldhost/yolks:nodejs_${{ matrix.tag }}
+            ghcr.io/nyxoservers/yolks:nodejs_${{ matrix.tag }}
